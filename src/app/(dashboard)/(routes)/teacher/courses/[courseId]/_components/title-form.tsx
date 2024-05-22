@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Course } from "@prisma/client";
 import axios from "axios";
 import { Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -20,9 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 interface TitleFormProps {
-    initialData: {
-        title: string;
-    };
+    initialData: Course;
     courseId: string;
 }
 
