@@ -7,6 +7,7 @@ import { IconBadge } from "@/components/icon-badge";
 
 import { db } from "@/lib/db";
 
+import { ChapterDescriptionForm } from "./_components/chapter-description-form";
 import { ChapterTitleForm } from "./_components/chapter-title-form";
 
 export default async function ChapterIdPage({
@@ -84,6 +85,12 @@ export default async function ChapterIdPage({
                         </div>
 
                         <ChapterTitleForm
+                            initialData={chapter}
+                            courseId={params.courseId}
+                            chapterId={params.chapterId}
+                        />
+
+                        <ChapterDescriptionForm
                             initialData={chapter}
                             courseId={params.courseId}
                             chapterId={params.chapterId}
