@@ -1,14 +1,38 @@
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+
+import { CoursesList } from "@/components/courses-list";
 import { SearchInput } from "@/components/search-input";
 
 import { db } from "@/lib/db";
 
 import { Categories } from "./_components/categories";
 
-export default async function SearchPage() {
+import { getCourses } from "../../../../../actions/get-courses";
+
+interface SearchPageProps {
+    searchParams: {
+        title: string;
+        categoryId: string;
+    };
+}
+
+export default async function SearchPage({ searchParams }: SearchPageProps) {
+    const { userId } = auth();
+
+    if (!userId) {
+        return redirect("/");
+    }
+
     const categories = await db.category.findMany({
         orderBy: {
             name: "asc"
         },
+    });
+
+    const courses = await getCourses({
+        userId,
+        ...searchParams,
     });
 
     return (
@@ -17,9 +41,13 @@ export default async function SearchPage() {
                 <SearchInput />
             </div>
 
-            <div className="p-6">
+            <div className="p-6 space-y-4">
                 <Categories
                     items={categories}
+                />
+
+                <CoursesList
+                    items={courses}
                 />
             </div>
         </>
