@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 
 import { db } from "@/lib/db";
 
+import { CourseProgress } from "@/components/course-progress";
+
 import { CourseSidebarItem } from "./course-sidebar-item";
 
 interface CourseSidebarProps {
@@ -38,7 +40,14 @@ export async function CourseSidebar({ course, progressCount }: CourseSidebarProp
                     {course.title}
                 </h1>
 
-                {/* Check purchase and add progress */}
+                {purchase && (
+                    <div className="mt-10">
+                        <CourseProgress
+                            variant="success"
+                            value={progressCount}
+                        />
+                    </div>
+                )}
             </div>
 
             <div className="flex flex-col w-full">
