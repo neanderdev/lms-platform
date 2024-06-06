@@ -1,9 +1,13 @@
 import { ClerkProvider } from "@clerk/nextjs";
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { extractRouterConfig } from "uploadthing/server";
 
 import { ConfettiProvider } from "@/components/providers/confetti-provider";
 import { ToastProvider } from "@/components/providers/toaster-provider";
+
+import { ourFileRouter } from "./api/uploadthing/core";
 
 import "./globals.css";
 
@@ -23,6 +27,10 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
+          <NextSSRPlugin
+            routerConfig={extractRouterConfig(ourFileRouter)}
+          />
+
           <ConfettiProvider />
           <ToastProvider />
 
