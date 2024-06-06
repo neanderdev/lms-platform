@@ -8,7 +8,13 @@ import { usePathname } from "next/navigation";
 import { SearchInput } from "@/components/search-input";
 import { Button } from "@/components/ui/button";
 
-export function NavbarRoutes() {
+import { isTeacher } from "@/lib/teacher";
+
+interface NavbarRoutesProps {
+    userId: string | null;
+};
+
+export function NavbarRoutes({ userId }: NavbarRoutesProps) {
     const pathname = usePathname();
 
     const isTeacherPage = pathname?.startsWith("/teacher");
@@ -34,13 +40,13 @@ export function NavbarRoutes() {
                             </Button>
                         </Link>
                     )
-                    : (
+                    : isTeacher(userId) ? (
                         <Link href="/teacher/courses">
                             <Button size="sm" variant="ghost">
                                 Teacher mode
                             </Button>
                         </Link>
-                    )
+                    ) : null
                 }
 
                 <UserButton

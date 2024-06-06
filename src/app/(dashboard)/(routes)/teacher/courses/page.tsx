@@ -1,8 +1,5 @@
 import { auth } from "@clerk/nextjs/server";
-import Link from "next/link";
 import { redirect } from "next/navigation";
-
-import { Button } from "@/components/ui/button";
 
 import { db } from "@/lib/db";
 
@@ -13,7 +10,7 @@ export default async function CoursesPage() {
     const { userId } = auth();
 
     if (!userId) {
-        return redirect("/");
+        return redirect("/sign-in");
     }
 
     const courses = await db.course.findMany({
@@ -27,10 +24,6 @@ export default async function CoursesPage() {
 
     return (
         <div className="p-6">
-            <Link href="/teacher/create">
-                <Button>New Course</Button>
-            </Link>
-
             <DataTable columns={columns} data={courses} />
         </div>
     );

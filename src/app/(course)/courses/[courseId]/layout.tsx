@@ -18,7 +18,7 @@ export default async function CourseLayout({
     const { userId } = auth();
 
     if (!userId) {
-        return redirect("/");
+        return redirect("/sign-in");
     }
 
     const course = await db.course.findUnique({

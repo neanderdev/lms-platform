@@ -20,7 +20,7 @@ export default async function ChapterIdPage({
     const { userId } = auth();
 
     if (!userId) {
-        return redirect("/");
+        return redirect("/sign-in");
     }
 
     const {
